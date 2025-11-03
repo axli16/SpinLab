@@ -285,7 +285,8 @@ export const MorphingGLBScene = () => {
         const glbUrls = [
           'assets/Temple.glb',
           'assets/Torii.glb',
-          'assets/Motorcycle.glb'
+          'assets/Motorcycle.glb',
+          'assets/Pagoda.glb'
         ];
 
         const scrollUrl = 'assets/Parchment.glb';
@@ -423,105 +424,105 @@ export const MorphingGLBScene = () => {
         scene.add(mesh);
         
         // Create 3D text for scroll view
-        const createTextMesh = (lines) => {
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-          canvas.width = 1024;
-          canvas.height = 1024;
+        // const createTextMesh = (lines) => {
+        //   const canvas = document.createElement('canvas');
+        //   const context = canvas.getContext('2d');
+        //   canvas.width = 1024;
+        //   canvas.height = 1024;
           
-          context.fillStyle = 'transparent';
-          context.fillRect(0, 0, canvas.width, canvas.height);
+        //   context.fillStyle = 'transparent';
+        //   context.fillRect(0, 0, canvas.width, canvas.height);
           
-          context.font = 'bold 40px Roboto Mono';
-          context.fillStyle = 'white';
-          context.textAlign = 'center';
-          context.textBaseline = 'middle';
+        //   context.font = 'bold 40px Roboto Mono';
+        //   context.fillStyle = 'white';
+        //   context.textAlign = 'center';
+        //   context.textBaseline = 'middle';
           
           
-          const lineHeight = 80;
-          const startY = canvas.height / 2 - (lines.length * lineHeight) / 2;
+        //   const lineHeight = 80;
+        //   const startY = canvas.height / 2 - (lines.length * lineHeight) / 2;
           
-          lines.forEach((line, i) => {
-            context.fillText(line, canvas.width / 2, startY + i * lineHeight);
-          });
+        //   lines.forEach((line, i) => {
+        //     context.fillText(line, canvas.width / 2, startY + i * lineHeight);
+        //   });
           
-          const texture = new THREE.CanvasTexture(canvas);
-          texture.needsUpdate = true;
+        //   const texture = new THREE.CanvasTexture(canvas);
+        //   texture.needsUpdate = true;
           
-          const textGeometry = new THREE.PlaneGeometry(2.5, 2.5);
-          const textMaterial = new THREE.MeshBasicMaterial({
-            map: texture,
-            transparent: true,
-            depthTest: false, 
-            depthWrite: false,
-            opacity: 0,
-            side: THREE.DoubleSide
-          });
+        //   const textGeometry = new THREE.PlaneGeometry(2.5, 2.5);
+        //   const textMaterial = new THREE.MeshBasicMaterial({
+        //     map: texture,
+        //     transparent: true,
+        //     depthTest: false, 
+        //     depthWrite: false,
+        //     opacity: 0,
+        //     side: THREE.DoubleSide
+        //   });
           
-          const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-          textMesh.position.z = 0.1; // Slightly in front
-          textMeshRef.current = textMesh;
-          scene.add(textMesh);
-          return textMesh;
-        };
+        //   const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        //   textMesh.position.z = 0.1; // Slightly in front
+        //   textMeshRef.current = textMesh;
+        //   scene.add(textMesh);
+        //   return textMesh;
+        // };
 
-        let textMeshes = [];
-        let aboutTextMesh = [];
+        // let textMeshes = [];
+        // let aboutTextMesh = [];
         
-        const aboutMe = [
-          'Hi, I\'m Andrew,',
-          'a Software Engineering student at Carleton University',
-          'with experience in backend development,',
-          'data analysis, and embedded systems.',
-          'I love building efficient, data-driven ',
-          'solutions and exploring how software',
-          'can bridge the digital and physical worlds.',
-          'Outside of coding, you\'ll usually find me at ',
-          'the gym, on the slopes, or reading about new tech.',
-          ''
-        ];
-        aboutTextMesh.push(createTextMesh(aboutMe));
-        textMeshes.push(aboutTextMesh);
+        // const aboutMe = [
+        //   'Hi, I\'m Andrew,',
+        //   'a Software Engineering student at Carleton University',
+        //   'with experience in backend development,',
+        //   'data analysis, and embedded systems.',
+        //   'I love building efficient, data-driven ',
+        //   'solutions and exploring how software',
+        //   'can bridge the digital and physical worlds.',
+        //   'Outside of coding, you\'ll usually find me at ',
+        //   'the gym, on the slopes, or reading about new tech.',
+        //   ''
+        // ];
+        // aboutTextMesh.push(createTextMesh(aboutMe));
+        // textMeshes.push(aboutTextMesh);
         
 
-        let cvTextMeshes = [];
-        let cvLines = [
-          'MDA Space',
-          'Software Engineering Intern',
-          'Sept 2025 - Sept 2026',
-          '',
-        ]
-        cvTextMeshes.push(createTextMesh(cvLines));
-        cvLines = [
-          'Ajile Light Industries',
-          'Software Engineering Intern',
-          'Jan 2025 - Aug 2025',
-        ]
-        cvTextMeshes.push(createTextMesh(cvLines));
-        cvLines = [
-          'NAV Canada',
-          'Data Analyst Co-op',
-          'May 2024 - Aug 2024',
-        ];
-        cvTextMeshes.push(createTextMesh(cvLines));
-        cvLines = [
-          'Project Tech Conferences',
-          'Backend Developer',
-          'Apr 2022 - Aug 2023',
-        ]
-        cvTextMeshes.push(createTextMesh(cvLines));
-        textMeshes.push(cvTextMeshes);
+        // let cvTextMeshes = [];
+        // let cvLines = [
+        //   'MDA Space',
+        //   'Software Engineering Intern',
+        //   'Sept 2025 - Sept 2026',
+        //   '',
+        // ]
+        // cvTextMeshes.push(createTextMesh(cvLines));
+        // cvLines = [
+        //   'Ajile Light Industries',
+        //   'Software Engineering Intern',
+        //   'Jan 2025 - Aug 2025',
+        // ]
+        // cvTextMeshes.push(createTextMesh(cvLines));
+        // cvLines = [
+        //   'NAV Canada',
+        //   'Data Analyst Co-op',
+        //   'May 2024 - Aug 2024',
+        // ];
+        // cvTextMeshes.push(createTextMesh(cvLines));
+        // cvLines = [
+        //   'Project Tech Conferences',
+        //   'Backend Developer',
+        //   'Apr 2022 - Aug 2023',
+        // ]
+        // cvTextMeshes.push(createTextMesh(cvLines));
+        // textMeshes.push(cvTextMeshes);
         
-        let projectsTextMeshes = [];
-        let projectLines = [
-          'Calisthenics Coach',
-          ''
-        ]
-        projectsTextMeshes.push(createTextMesh(projectLines));
-        textMeshes.push(projectsTextMeshes);
+        // let projectsTextMeshes = [];
+        // let projectLines = [
+        //   'Calisthenics Coach',
+        //   ''
+        // ]
+        // projectsTextMeshes.push(createTextMesh(projectLines));
+        // textMeshes.push(projectsTextMeshes);
 
-        setTextMeshes(textMeshes);
-        console.log('Text meshes created:', textMeshes);
+        // setTextMeshes(textMeshes);
+        // console.log('Text meshes created:', textMeshes);
         
 
         // Animation variables
@@ -942,8 +943,8 @@ export const MorphingGLBScene = () => {
       {!loading && (
         <>
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-20">
-            {/* Button 1 - Home/Objects */}
-            <button
+
+            {/* <button
               onClick={() => handleButtonClick('objects')}
               className={`relative w-16 h-16 transition-all duration-300 ${
                 currentViewMode === 'objects' ? 'opacity-100 scale-110' : 'opacity-70 hover:opacity-100 hover:scale-105'
@@ -961,7 +962,6 @@ export const MorphingGLBScene = () => {
               </div>
             </button>
 
-            {/* Button 2 - About/Scroll */}
             <button
               onClick={() => handleButtonClick('about')}
               className={`relative w-16 h-16 transition-all duration-300 ${
@@ -979,7 +979,7 @@ export const MorphingGLBScene = () => {
                 ABOUT
               </div>
             </button>
-            {/* Button 3 - CV */}
+
             <button
               onClick={() => handleButtonClick('CV')}
               className={`relative w-16 h-16 transition-all duration-300 ${
@@ -997,7 +997,7 @@ export const MorphingGLBScene = () => {
                 CV
               </div>
             </button>
-            {/* Button 4 - Projects */}
+
             <button
               onClick={() => handleButtonClick('projects')}
               className={`relative w-16 h-16 transition-all duration-300 ${
@@ -1016,7 +1016,7 @@ export const MorphingGLBScene = () => {
               </div>
             </button>
 
-            {/* Button 5 - Contact/Icons */}
+
             <button
               onClick={() => handleButtonClick('icons')}
               className={`relative w-16 h-16 transition-all duration-300 ${
@@ -1033,11 +1033,11 @@ export const MorphingGLBScene = () => {
               <div className="absolute inset-0 flex items-center justify-center text-gray-800 font-bold text-xs">
                 CONTACT
               </div>
-            </button>
+            </button> */}
           </div>
 
           {/* Social Links (when in icons mode) */}
-          {viewModeRef.current === 'icons' && (
+          {/* {viewModeRef.current === 'icons' && (
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex gap-8 z-20">
               <a
                 href={socialLinks.mail}
@@ -1068,7 +1068,7 @@ export const MorphingGLBScene = () => {
                 <span className="text-2xl">💻</span>
               </a>
             </div>
-          )}
+          )} */}
 
           {/* Content overlay for scroll mode */}
           {/* {viewModeRef.current === 'scroll' && (
@@ -1082,14 +1082,14 @@ export const MorphingGLBScene = () => {
           )} */}
 
           <div className=''>
-            <button onClick={() => handleScrollButtonClick('previous')}
+            {/* <button onClick={() => handleScrollButtonClick('previous')}
               className={`absolute top-40 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white  bg-opacity-0 backdrop-blur-md rounded-lg shadow-lg p-4 hover:scale-110 transition-transform ${currentViewMode === 'CV' || currentViewMode === 'projects' ? '' : 'hidden'}`}>
               ↑
             </button>
             <button onClick={() => handleScrollButtonClick('next')}
               className={`absolute bottom-40 left-1/2 -translate-x-1/2  text-white bg-opacity-0 backdrop-blur-md rounded-lg shadow-lg p-4 hover:scale-110 transition-transform ${currentViewMode === 'CV' || currentViewMode === 'projects'  ? '' : 'hidden'}`}>
               ↓
-            </button>
+            </button> */}
           </div>
           <div className="absolute top-8 left-8 text-white font-mono font-bold text-lg opacity-50">
             Andrew Li | Software Engineer
