@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew Li - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #fff;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Header Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #000;
+            position: relative;
+        }
+
+        .header-content {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .bio {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #c0c0c0;
+            line-height: 1.8;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Work Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: #fff;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #000;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .company {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 0.3rem;
+        }
+
+        .duration {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .job-description {
+            color: #c0c0c0;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1px solid #222;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tech {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #a0a0a0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 2px;
+        }
+
+        .project-link:hover {
+            color: #888;
+            border-bottom-color: #888;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #000;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">Andrew Li</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header/Bio Section -->
+    <header id="home">
+        <div class="container">
+            <div class="header-content">
+                <h1>Andrew Li</h1>
+                <p class="tagline">Software Engineering Student</p>
+                <p class="bio">
+                    I'm a software engineering student with a broad interest in technology and design. 
+                    I enjoy turning ideas into simple, reliable, and well-structured software solutions.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Work Experience Section -->
+    <section id="work">
+        <div class="container">
+            <h2>Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 class="job-title">Software Engineer Intern</h3>
+                    <p class="company">MDA Space</p>
+                    <p class="duration">Sept 2025 - Present</p>
+                    <p class="job-description">
+                        Contributed to embedded software focused on concurrent processing and deterministic control, 
+                        integrating TCP and serial communication for real-time systems.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="job-title">Software Engineering Intern</h3>
+                    <p class="company">Ajile Light Industries</p>
+                    <p class="duration">Jan 2025 - Aug 2025</p>
+                    <p class="job-description">
+                        Worked on robotics and embedded systems, building CI/CD pipelines and automated testing tools to support fast, reliable development in a startup environment.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="job-title">Data Analyst</h3>
+                    <p class="company">NAV Canada</p>
+                    <p class="duration">Apr 2024 - Aug 2024</p>
+                    <p class="job-description">
+                        Automated data analysis workflows using Python, visualized trends, and presented key findings to support system performance reviews.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="job-title">Backend Developer</h3>
+                    <p class="company">Project Tech Conferences</p>
+                    <p class="duration">Apr 2022 - Aug 2023</p>
+                    <p class="job-description">
+                        Built new backend features and functionality for internal tools and the public website to enhance usability and performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h4 class="project-title">Caliscan</h4>
+                    <p class="project-tech">Computer Vision / React / Mediapipe</p>
+                    <p class="project-description">
+                        Analyzes calisthenics form from videos using pose detection and feedback overlay.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/axli16/Caliscan" class="project-link">View Project</a>
+                        <!-- <a href="#" class="project-link">Demo</a> -->
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4 class="project-title">TradeSim</h4>
+                    <p class="project-tech">AWS / React / Graphing</p>
+                    <p class="project-description">
+                        A realistic web-based trading simulator that lets users practice day trading with live market data and portfolio tracking.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/axli16/TradeSim" class="project-link">GitHub</a>
+                        <!-- <a href="#" class="project-link">Demo</a> -->
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4 class="project-title">StockSight</h4>
+                    <p class="project-tech">AI / Python / scikit-learn</p>
+                    <p class="project-description">
+                        An AI-powered model that predicts daily stock movements using market data and technical indicators.
+                    </p>
+                    <div class="project-links">
+                        <a href="#\https://github.com/axli16/StockSight" class="project-link">GitHub</a>
+                        <!-- <a href="#" class="project-link">Demo</a> -->
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4 class="project-title">Text Editor</h4>
+                    <p class="project-tech">C++ / Systems </p>
+                    <p class="project-description">
+                        A lightweight text editor built from scratch with custom features for writing and file management.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/axli16/TextEditor" class="project-link">GitHub</a>
+                        <!-- <a href="#" class="project-link">Demo</a> -->
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h4 class="project-title">SpinLab</h4>
+                    <p class="project-tech">3D  / Three.js / Animations</p>
+                    <p class="project-description">
+                        An interactive Three.js showcase room of morphing point clouds, mesh transitions, and smooth 3D spinning.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/axli16/SpinLab" class="project-link">GitHub</a>
+                        <!-- <a href="#" class="project-link">Demo</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Let's Connect</h2>
+            <p style="color: #888; margin-bottom: 2rem;">
+                I'm always interested in hearing about new projects and opportunities.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:andrew.x.L815@example.com" class="contact-btn">andrew.x.L815@gmail.com</a>
+                <a href="https://www.linkedin.com/in/andrew-li-sw/" class="contact-btn">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section, header');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Observe timeline items with staggered animation
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            setTimeout(() => {
+                observer.observe(item);
+            }, index * 100);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
