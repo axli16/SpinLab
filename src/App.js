@@ -370,14 +370,16 @@ export const MorphingGLBScene = () => {
         }
 
         // Scroll-based sphere morph tracking
-        let scrollBlend = 0; // 0 = full model, 1 = full sphere
+        let scrollBlend = 0;       // current blend (lerps toward target)
+        let scrollBlendTarget = 0; // where scroll wants to go
+        const blendLerpSpeed = 0.015; // ~1.5s full transition at 60fps
 
         const handleScroll = () => {
           const heroHeight = window.innerHeight;
           const scrollY = window.scrollY || window.pageYOffset;
           // Start blending at 30% of hero height, fully sphere by 100%
           const rawBlend = (scrollY - heroHeight * 0.3) / (heroHeight * 0.7);
-          scrollBlend = Math.max(0, Math.min(1, rawBlend));
+          scrollBlendTarget = Math.max(0, Math.min(1, rawBlend));
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -549,7 +551,16 @@ export const MorphingGLBScene = () => {
             geometry.computeVertexNormals();
           }
 
-          // Scroll-based sphere morph: blend current positions toward noisy sphere
+          // Scroll-based sphere morph: slow lerp INTO sphere, fast snap BACK to models
+          if (scrollBlendTarget > scrollBlend) {
+            // Morphing into sphere — slow cinematic transition
+            scrollBlend += (scrollBlendTarget - scrollBlend) * blendLerpSpeed;
+            if (Math.abs(scrollBlend - scrollBlendTarget) < 0.001) scrollBlend = scrollBlendTarget;
+          } else {
+            // Reverting to models — quick snap back
+            scrollBlend = scrollBlendTarget;
+          }
+
           if (scrollBlend > 0.001) {
             const easedBlend = scrollBlend < 0.5
               ? 2 * scrollBlend * scrollBlend
