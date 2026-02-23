@@ -761,56 +761,75 @@ export const MorphingGLBScene = () => {
             <div className="projects-grid">
               <div className="project-card">
                 <h4 className="project-title">Caliscan</h4>
-                <p className="project-tech">Computer Vision / React / Mediapipe</p>
+                <div className="project-tech">
+                  <span className="tech-pill">Computer Vision</span>
+                  <span className="tech-pill">React</span>
+                  <span className="tech-pill">Mediapipe</span>
+                </div>
                 <p className="project-description">
                   Analyzes calisthenics form from videos using pose detection and feedback overlay.
                 </p>
                 <div className="project-links">
-                  <a href="https://github.com/axli16/Caliscan" className="project-link" target="_blank" rel="noopener noreferrer">View Project</a>
+                  <a href="https://github.com/axli16/Caliscan" className="project-link" target="_blank" rel="noopener noreferrer">Github <span className="arrow">→</span></a>
                 </div>
               </div>
 
               <div className="project-card">
                 <h4 className="project-title">TradeSim</h4>
-                <p className="project-tech">AWS / React / Graphing</p>
+                <div className="project-tech">
+                  <span className="tech-pill">AWS</span>
+                  <span className="tech-pill">React</span>
+                  <span className="tech-pill">Graphing</span>
+                </div>
                 <p className="project-description">
                   A realistic web-based trading simulator that lets users practice day trading with live market data and portfolio tracking.
                 </p>
                 <div className="project-links">
-                  <a href="https://github.com/axli16/TradeSim" className="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href="https://github.com/axli16/TradeSim" className="project-link" target="_blank" rel="noopener noreferrer">GitHub <span className="arrow">→</span></a>
                 </div>
               </div>
 
               <div className="project-card">
                 <h4 className="project-title">StockSight</h4>
-                <p className="project-tech">AI / Python / scikit-learn</p>
+                <div className="project-tech">
+                  <span className="tech-pill">AI</span>
+                  <span className="tech-pill">Python</span>
+                  <span className="tech-pill">scikit-learn</span>
+                </div>
                 <p className="project-description">
                   An AI-powered model that predicts daily stock movements using market data and technical indicators.
                 </p>
                 <div className="project-links">
-                  <a href="https://github.com/axli16/StockSight" className="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href="https://github.com/axli16/StockSight" className="project-link" target="_blank" rel="noopener noreferrer">GitHub <span className="arrow">→</span></a>
                 </div>
               </div>
 
               <div className="project-card">
                 <h4 className="project-title">Text Editor</h4>
-                <p className="project-tech">C++ / Systems</p>
+                <div className="project-tech">
+                  <span className="tech-pill">C++</span>
+                  <span className="tech-pill">Systems</span>
+                </div>
                 <p className="project-description">
                   A lightweight text editor built from scratch with custom features for writing and file management.
                 </p>
                 <div className="project-links">
-                  <a href="https://github.com/axli16/TextEditor" className="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href="https://github.com/axli16/TextEditor" className="project-link" target="_blank" rel="noopener noreferrer">GitHub <span className="arrow">→</span></a>
                 </div>
               </div>
 
               <div className="project-card">
                 <h4 className="project-title">SpinLab</h4>
-                <p className="project-tech">3D / Three.js / Animations</p>
+                <div className="project-tech">
+                  <span className="tech-pill">3D</span>
+                  <span className="tech-pill">Three.js</span>
+                  <span className="tech-pill">Animations</span>
+                </div>
                 <p className="project-description">
                   An interactive Three.js showcase room of morphing point clouds, mesh transitions, and smooth 3D spinning.
                 </p>
                 <div className="project-links">
-                  <a href="https://github.com/axli16/SpinLab" className="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href="https://github.com/axli16/SpinLab" className="project-link" target="_blank" rel="noopener noreferrer">GitHub <span className="arrow">→</span></a>
                 </div>
               </div>
             </div>
