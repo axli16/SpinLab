@@ -348,6 +348,41 @@ export const MorphingGLBScene = () => {
         mesh.rotateX(0.2);
         scene.add(mesh);
 
+        // Generate noisy sphere positions for the scroll-based morph
+        // Each vertex gets projected onto a sphere with per-vertex noise
+        const maxVertices = expandedModels[0].positions.length / 3;
+        const sphereRadius = 1.6;
+        const spherePositions = new Float32Array(maxVertices * 3);
+
+        for (let i = 0; i < maxVertices; i++) {
+          // Use golden ratio spiral for even distribution
+          const phi = Math.acos(1 - 2 * (i + 0.5) / maxVertices);
+          const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+
+          // Per-vertex noise based on index for organic feel
+          const noise = 0.85 + Math.sin(i * 0.37) * 0.08 + Math.cos(i * 0.73) * 0.07
+            + Math.sin(i * 1.13) * 0.04 + Math.cos(i * 0.19) * 0.05;
+          const r = sphereRadius * noise;
+
+          spherePositions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+          spherePositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+          spherePositions[i * 3 + 2] = r * Math.cos(phi);
+        }
+
+        // Scroll-based sphere morph tracking
+        let scrollBlend = 0; // 0 = full model, 1 = full sphere
+
+        const handleScroll = () => {
+          const heroHeight = window.innerHeight;
+          const scrollY = window.scrollY || window.pageYOffset;
+          // Start blending at 30% of hero height, fully sphere by 100%
+          const rawBlend = (scrollY - heroHeight * 0.3) / (heroHeight * 0.7);
+          scrollBlend = Math.max(0, Math.min(1, rawBlend));
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // set initial value
+
         // Animation variables
         let morphProgress = 0;
         let ripplePhase = 0;
@@ -514,6 +549,25 @@ export const MorphingGLBScene = () => {
             geometry.computeVertexNormals();
           }
 
+          // Scroll-based sphere morph: blend current positions toward noisy sphere
+          if (scrollBlend > 0.001) {
+            const easedBlend = scrollBlend < 0.5
+              ? 2 * scrollBlend * scrollBlend
+              : 1 - Math.pow(-2 * scrollBlend + 2, 2) / 2;
+
+            for (let i = 0; i < positions.length; i += 3) {
+              positions[i] = positions[i] + (spherePositions[i] - positions[i]) * easedBlend;
+              positions[i + 1] = positions[i + 1] + (spherePositions[i + 1] - positions[i + 1]) * easedBlend;
+              positions[i + 2] = positions[i + 2] + (spherePositions[i + 2] - positions[i + 2]) * easedBlend;
+            }
+            geometry.attributes.position.needsUpdate = true;
+            geometry.computeVertexNormals();
+          }
+
+          // Scale down slightly and adjust camera when scrolled past hero
+          const targetScale = 1 - scrollBlend * 0.3;
+          mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+
           renderer.render(scene, camera);
         };
 
@@ -529,6 +583,7 @@ export const MorphingGLBScene = () => {
           canvas.removeEventListener('touchstart', handleTouchStart);
           canvas.removeEventListener('touchmove', handleTouchMove);
           canvas.removeEventListener('touchend', handleTouchEnd);
+          window.removeEventListener('scroll', handleScroll);
         };
 
       } catch (err) {
